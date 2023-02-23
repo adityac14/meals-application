@@ -8,15 +8,26 @@ const allMealsURL = "https://www.themealdb.com/api/json/v1/1/search.php?s=a";
 const randomMealURL = "https://www.themealdb.com/api/json/v1/1/random.php";
 
 const AppProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+
   const [meals, setMeals] = useState([]);
 
   const fetchMeals = async (url) => {
+    setLoading(true)
     try {
       const { data } = await axios(url);
-      setMeals(data.meals)
+      if (data.meals){
+        setMeals(data.meals);
+      }
+      else{
+        setMeals([]);
+      }
+
     } catch (error) {
       console.log(error.response);
     }
+    setLoading(false)
+
   };
 
   // Always Fetch Data from APIs using the useEffect hook, otherwise you will be in an infinite loop
@@ -26,9 +37,7 @@ const AppProvider = ({ children }) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{meals}}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={{loading, meals }}>{children}</AppContext.Provider>
   );
 };
 
