@@ -9,7 +9,7 @@ const Meals = () => {
 
         return (
           <article key={idMeal} className="single-meal">
-            <img src={image} className="img" style={{width: '200px'}} />
+            <img src={image} className="img"/>
             <footer>
               <h5>{title}</h5>
               <button className="like-btn">Click me</button>
