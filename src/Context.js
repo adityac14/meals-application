@@ -19,6 +19,8 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Always Fetch Data from APIs using the useEffect hook, otherwise you will be in an infinite loop
+  // Also have the dependency array '[]'
   useEffect(() => {
     fetchMeals(allMealsURL);
   }, []);
