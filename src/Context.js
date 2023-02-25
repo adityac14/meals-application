@@ -4,13 +4,15 @@ import axios from "axios";
 const AppContext = React.createContext();
 
 // children is a special prop and that represents whatever we have in the component
-const allMealsURL = "https://www.themealdb.com/api/json/v1/1/search.php?s=a";
+const allMealsURL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 const randomMealURL = "https://www.themealdb.com/api/json/v1/1/random.php";
 
 const AppProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [meals, setMeals] = useState([]);
+  const[searchTerm, setSearchTerm] = useState('');
+
 
   const fetchMeals = async (url) => {
     setLoading(true)
@@ -33,11 +35,11 @@ const AppProvider = ({ children }) => {
   // Always Fetch Data from APIs using the useEffect hook, otherwise you will be in an infinite loop
   // Also have the dependency array '[]'
   useEffect(() => {
-    fetchMeals(allMealsURL);
-  }, []);
+    fetchMeals(`${allMealsURL}${searchTerm}`);
+  }, [searchTerm]);
 
   return (
-    <AppContext.Provider value={{loading, meals }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{loading, meals, setSearchTerm }}>{children}</AppContext.Provider>
   );
 };
 
