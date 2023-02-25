@@ -32,16 +32,30 @@ const AppProvider = ({ children }) => {
 
   };
 
+  const fetchRandomMeal = () =>{
+    fetchMeals(randomMealURL)
+
+  }
+
+  useEffect(() => {
+    fetchMeals(allMealsURL)
+  }, [])
+
+  
+
   // Always Fetch Data from APIs using the useEffect hook, otherwise you will be in an infinite loop
   // Also have the dependency array '[]'
   useEffect(() => {
+    if(!searchTerm) return
     fetchMeals(`${allMealsURL}${searchTerm}`);
   }, [searchTerm]);
 
   return (
-    <AppContext.Provider value={{loading, meals, setSearchTerm }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{loading, meals, setSearchTerm, fetchRandomMeal }}>{children}</AppContext.Provider>
   );
 };
+
+
 
 export const useGlobalContext = () => {
   return useContext(AppContext);
