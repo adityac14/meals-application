@@ -2,7 +2,7 @@ import { useGlobalContext } from "../Context";
 import { BsHandThumbsUp } from "react-icons/bs";
 
 const Meals = () => {
-  const { meals, loading } = useGlobalContext();
+  const { meals, loading, selectMeal } = useGlobalContext();
 
   if (loading) {
     return (
@@ -19,11 +19,14 @@ const Meals = () => {
   return (
     <section className="section-center">
       {meals.map((singleMeal) => {
+        {/* Destructing of meal object */}
         const { idMeal, strMeal: title, strMealThumb: image } = singleMeal;
 
         return (
           <article key={idMeal} className="single-meal">
-            <img src={image} className="img" />
+            {/* We set up the arrow function for the onClick because we want to invoke it only after the user clicks on the image. Otherwise it will be invoked immeadiately 
+            which is what we don't want. You want to set it up as a return only once we click*/}
+            <img src={image} className="img" onClick={() => selectMeal(idMeal)} />
             <footer>
               <h5>{title}</h5>
               <button className="like-btn">
