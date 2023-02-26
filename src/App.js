@@ -7,11 +7,11 @@ import Search from "./components/Search";
 
 
 function App() {
-  const {showModal} = useGlobalContext()
+  const {showModal, favourites} = useGlobalContext()
   return (
     <main>
       <Search />
-      {/* {<Favourites />} */}
+      {favourites.length > 0 && <Favourites />}
       <Meals />
       {showModal && <Modal />}
       {/* Showing Modal based on AND operator  */}

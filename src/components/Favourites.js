@@ -1,5 +1,26 @@
-const Favourites = () => {
-    return <h1>Favourites Component </h1>
-}
+import { useGlobalContext } from "../Context";
 
-export default Favourites
+const Favourites = () => {
+  const { favourites, selectMeal, removeFromFavourites } = useGlobalContext();
+  return (
+    <section className="favourites">
+      <div className="favourites-content">
+        <h5>Favourites</h5>
+        <div className="favourites-container">
+          {favourites.map((item) => {
+            const { idMeal, strMealThumb: img } = item;
+
+            return <div key={idMeal} className="favourite-item">
+                <img src={img} className="favourites-img img"></img>
+                <button className="remove-btn" onClick={() => removeFromFavourites(idMeal)}>
+                    Remove
+                </button>
+            </div>;
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Favourites;
